@@ -1,6 +1,3 @@
-#[cfg(feature = "infer_name")]
-use approxim as approx;
-
 use approx_derive::*;
 
 #[test]
@@ -531,7 +528,6 @@ fn iterator_enum() {
     approx::assert_abs_diff_ne!(p2, p3);
 }
 
-#[cfg(feature = "infer_name")]
 #[test]
 fn epsilon_mapping() {
     #[derive(Clone, PartialEq, Debug, AbsDiffEq)]

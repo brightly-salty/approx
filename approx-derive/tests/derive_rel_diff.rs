@@ -1,6 +1,4 @@
 use approx_derive::*;
-#[cfg(feature = "infer_name")]
-use approxim as approx;
 
 #[test]
 fn derive_rel_diff_eq() {
@@ -434,7 +432,6 @@ fn iterator_enum() {
     approx::assert_relative_ne!(p2, p3);
 }
 
-#[cfg(feature = "infer_name")]
 #[test]
 fn epsilon_mapping() {
     #[derive(Clone, PartialEq, Debug, RelativeEq)]
