@@ -1,25 +1,9 @@
 # approx
 
-![Test](https://img.shields.io/github/actions/workflow/status/jonaspleyer/approxim/test.yml?style=flat-square&label=Test)
-[![Crate](https://img.shields.io/crates/v/approxim.svg?style=flat-square)](https://crates.io/crates/approxim)
+![Test](https://img.shields.io/github/actions/workflow/status/brendanzab/approx/test.yml?style=flat-square&label=Test)
+[![Crate](https://img.shields.io/crates/v/approx.svg?style=flat-square)](https://crates.io/crates/approx)
 [![License Apache](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
-[![Docs](https://img.shields.io/docsrs/approxim?style=flat-square)](https://docs.rs/approxim)
-[![Minimum rustc version](https://img.shields.io/badge/rustc-1.36+-lightgray.svg?style=flat-square)](https://github.com/jonaspleyer/approxim#rust-version-requirements)
-![Codecov](https://img.shields.io/codecov/c/github/jonaspleyer/approxim?style=flat-square)
+[![Docs](https://img.shields.io/docsrs/approx?style=flat-square)](https://docs.rs/approx)
+[![Minimum rustc version](https://img.shields.io/badge/rustc-1.36+-lightgray.svg?style=flat-square)](https://github.com/brendanzab/approx#rust-version-requirements)
 
 > Approximate floating point equality comparisons and assertions for the Rust Programming Language.
-
-This is a fork of the popular [approx](https://github.com/brendanzab/approx) crate which extends the
-functionality of `approx` by implementing many of the PRs of the original crate.
-It also provides derive macros via `approx-derive`
-
-## Replace `approx`
-To act as a drop-in replacement for [approx](https://github.com/brendanzab/approx), one can use the
-renaming option provided by cargo.
-
-```toml
-# Cargo.toml
-[dependencies]
-approx = { package = "approxim", version = "CURRENT_VERSION" }
-```
-Note that no further changes are required. Derive macros should also work with this workaround.
