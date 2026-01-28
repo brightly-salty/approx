@@ -17,7 +17,7 @@
 #![no_std]
 
 #[macro_use]
-extern crate approxim;
+extern crate approx;
 
 mod common;
 

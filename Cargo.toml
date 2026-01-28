@@ -1,14 +1,14 @@
 [package]
-name = "approxim"
-version = "0.6.10"
+name = "approx"
+version = "0.5.1"
 authors = ["Brendan Zabarauskas <bjzaba@yahoo.com.au>"]
 license = "Apache-2.0"
 description = "Approximate floating point equality comparisons and assertions."
 edition = "2021"
 
-documentation = "https://docs.rs/approxim"
-homepage = "https://github.com/jonaspleyer/approxim"
-repository = "https://github.com/jonaspleyer/approxim"
+documentation = "https://docs.rs/approx"
+homepage = "https://github.com/brendanzab/approx"
+repository = "https://github.com/brendanzab/approx"
 readme = "README.md"
 
 keywords = [
@@ -23,7 +23,7 @@ keywords = [
 features = ["std", "num-complex", "array_impl", "tuple_impl", "ordered-float"]
 
 [lib]
-name = "approxim"
+name = "approx"
 
 [features]
 default = ["std", "derive"]

@@ -1,4 +1,4 @@
-# approxim
+# approx
 
 ![Test](https://img.shields.io/github/actions/workflow/status/jonaspleyer/approxim/test.yml?style=flat-square&label=Test)
 [![Crate](https://img.shields.io/crates/v/approxim.svg?style=flat-square)](https://crates.io/crates/approxim)

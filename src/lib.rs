@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! A crate that provides facilities for testing the approximimate equality of floating-point
+//! A crate that provides facilities for testing the approximate equality of floating-point
 //! based types, using either relative difference, or units in the last place (ULPs)
 //! comparisons.
 //!
@@ -21,7 +21,7 @@
 //!
 //! ```rust
 //! #[macro_use]
-//! extern crate approxim;
+//! extern crate approx;
 //!
 //! use std::f64;
 //!
@@ -51,15 +51,15 @@
 //!
 //! # Implementing approximate equality for custom types
 //!
-//! The `*Eq` traits allow approximimate equalities to be implemented on types, based on the
+//! The `*Eq` traits allow approximate equalities to be implemented on types, based on the
 //! fundamental floating point implementations.
 //!
-//! For example, we might want to be able to do approximimate assertions on a complex number type:
+//! For example, we might want to be able to do approximate assertions on a complex number type:
 //!
 //! ```rust
 //! #[macro_use]
-//! extern crate approxim;
-//! # use approxim::{AbsDiffEq, RelativeEq, UlpsEq};
+//! extern crate approx;
+//! # use approx::{AbsDiffEq, RelativeEq, UlpsEq};
 //!
 //! #[derive(Debug, PartialEq)]
 //! struct Complex<T> {
@@ -103,7 +103,7 @@
 //! This means that we can make comparisons for either `Complex<f32>` or `Complex<f64>`:
 //!
 //! ```rust
-//! # use approxim::{AbsDiffEq, RelativeEq, UlpsEq};
+//! # use approx::{AbsDiffEq, RelativeEq, UlpsEq};
 //! # #[derive(Debug, PartialEq)]
 //! # struct Complex<T> { x: T, i: T, }
 //! #
@@ -185,7 +185,7 @@ pub use abs_diff_eq::AbsDiffEq;
 pub use relative_eq::RelativeEq;
 pub use ulps_eq::UlpsEq;
 
-/// The requisite parameters for testing for approximimate equality using a
+/// The requisite parameters for testing for approximate equality using a
 /// absolute difference based comparison.
 ///
 /// This is not normally used directly, rather via the
@@ -195,7 +195,7 @@ pub use ulps_eq::UlpsEq;
 ///
 /// ```rust
 /// use std::f64;
-/// use approxim::AbsDiff;
+/// use approx::AbsDiff;
 ///
 /// AbsDiff::default().eq(&1.0, &1.0);
 /// AbsDiff::default().epsilon(f64::EPSILON).eq(&1.0, &1.0);
@@ -248,7 +248,7 @@ where
     }
 }
 
-/// The requisite parameters for testing for approximimate equality using a
+/// The requisite parameters for testing for approximate equality using a
 /// relative based comparison.
 ///
 /// This is not normally used directly, rather via the
@@ -258,7 +258,7 @@ where
 ///
 /// ```rust
 /// use std::f64;
-/// use approxim::Relative;
+/// use approx::Relative;
 ///
 /// Relative::default().eq(&1.0, &1.0);
 /// Relative::default().epsilon(f64::EPSILON).eq(&1.0, &1.0);
@@ -326,7 +326,7 @@ where
     }
 }
 
-/// The requisite parameters for testing for approximimate equality using an ULPs
+/// The requisite parameters for testing for approximate equality using an ULPs
 /// based comparison.
 ///
 /// This is not normally used directly, rather via the `assert_ulps_{eq|ne}!`
@@ -336,7 +336,7 @@ where
 ///
 /// ```rust
 /// use std::f64;
-/// use approxim::Ulps;
+/// use approx::Ulps;
 ///
 /// Ulps::default().eq(&1.0, &1.0);
 /// Ulps::default().epsilon(f64::EPSILON).eq(&1.0, &1.0);
