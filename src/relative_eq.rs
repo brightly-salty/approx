@@ -27,7 +27,7 @@ use ordered_float::{NotNan, OrderedFloat};
 /// # Examples
 ///
 /// ```
-/// #[macro_use] extern crate approxim;
+/// #[macro_use] extern crate approx;
 /// # fn main() {
 /// assert_relative_eq!(1.0f32, 1.5f32, max_relative = 0.34);
 /// assert_relative_ne!(1.0f32, 1.5f32, max_relative = 0.33);
@@ -45,7 +45,7 @@ where
 
     /// A test for equality that uses a relative comparison if the values are far apart.
     fn relative_eq(&self, other: &Rhs, epsilon: Self::Epsilon, max_relative: Self::Epsilon)
-    -> bool;
+        -> bool;
 
     /// The inverse of [`RelativeEq::relative_eq`].
     fn relative_ne(

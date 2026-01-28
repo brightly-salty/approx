@@ -23,7 +23,7 @@ use ordered_float::{NotNan, OrderedFloat};
 /// # Examples
 ///
 /// ```
-/// #[macro_use] extern crate approxim;
+/// #[macro_use] extern crate approx;
 /// # fn main() {
 /// assert_abs_diff_eq!(1.0f32, 1.00000001f32, epsilon = 1e-8);
 /// assert_abs_diff_ne!(1.0f32, 1.0000001f32, epsilon = 1e-8);
