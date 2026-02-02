@@ -32,6 +32,8 @@ tuple_impl = ["paste"]
 vec_impl = []
 indexmap_impl = ["dep:indexmap"]
 derive = ["dep:approx-derive"]
+ordered-float = ["dep:ordered-float"]
+num-complex = ["dep:num-complex"]
 
 [dependencies]
 num-traits = { version = "0.2.19", default-features = false }
