@@ -534,7 +534,7 @@ mod test_tuple {
     }
 }
 
-#[cfg(feature = "num-complex")]
+#[cfg(feature = "num_complex")]
 mod test_complex {
     extern crate num_complex;
     pub use self::num_complex::Complex;
@@ -584,7 +584,7 @@ mod test_complex {
     }
 }
 
-#[cfg(feature = "ordered-float")]
+#[cfg(feature = "ordered_float")]
 mod test_ordered_float {
     extern crate ordered_float;
     pub use self::ordered_float::OrderedFloat;

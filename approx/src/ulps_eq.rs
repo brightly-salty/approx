@@ -5,12 +5,12 @@ use core::cell;
 use core::hash::{BuildHasher, Hash};
 #[cfg(feature = "indexmap_impl")]
 use indexmap::IndexMap;
-#[cfg(feature = "num-complex")]
+#[cfg(feature = "num_complex")]
 use num_complex::Complex;
-#[cfg(feature = "ordered-float")]
+#[cfg(feature = "ordered_float")]
 use num_traits::Float;
 use num_traits::Signed;
-#[cfg(feature = "ordered-float")]
+#[cfg(feature = "ordered_float")]
 use ordered_float::{NotNan, OrderedFloat};
 
 use crate::AbsDiffEq;
@@ -290,8 +290,8 @@ mod ulps_eq_tuple_impls {
     impl_ulps_eq!(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 }
 
-#[cfg(feature = "num-complex")]
-#[cfg_attr(docsrs, doc(cfg(feature = "num-complex")))]
+#[cfg(feature = "num_complex")]
+#[cfg_attr(docsrs, doc(cfg(feature = "num_complex")))]
 impl<T: UlpsEq> UlpsEq for Complex<T>
 where
     T::Epsilon: Clone,
@@ -308,8 +308,8 @@ where
     }
 }
 
-#[cfg(feature = "ordered-float")]
-#[cfg_attr(docsrs, doc(cfg(feature = "ordered-float")))]
+#[cfg(feature = "ordered_float")]
+#[cfg_attr(docsrs, doc(cfg(feature = "ordered_float")))]
 impl<T: UlpsEq + Copy> UlpsEq for NotNan<T> {
     #[inline]
     fn default_max_ulps() -> u32 {
@@ -322,8 +322,8 @@ impl<T: UlpsEq + Copy> UlpsEq for NotNan<T> {
     }
 }
 
-#[cfg(feature = "ordered-float")]
-#[cfg_attr(docsrs, doc(cfg(feature = "ordered-float")))]
+#[cfg(feature = "ordered_float")]
+#[cfg_attr(docsrs, doc(cfg(feature = "ordered_float")))]
 impl<T: UlpsEq + Float + ordered_float::FloatCore> UlpsEq<T> for NotNan<T> {
     #[inline]
     fn default_max_ulps() -> u32 {
@@ -336,8 +336,8 @@ impl<T: UlpsEq + Float + ordered_float::FloatCore> UlpsEq<T> for NotNan<T> {
     }
 }
 
-#[cfg(feature = "ordered-float")]
-#[cfg_attr(docsrs, doc(cfg(feature = "ordered-float")))]
+#[cfg(feature = "ordered_float")]
+#[cfg_attr(docsrs, doc(cfg(feature = "ordered_float")))]
 impl<T: UlpsEq + Float + ordered_float::FloatCore> UlpsEq for OrderedFloat<T> {
     #[inline]
     fn default_max_ulps() -> u32 {
@@ -350,8 +350,8 @@ impl<T: UlpsEq + Float + ordered_float::FloatCore> UlpsEq for OrderedFloat<T> {
     }
 }
 
-#[cfg(feature = "ordered-float")]
-#[cfg_attr(docsrs, doc(cfg(feature = "ordered-float")))]
+#[cfg(feature = "ordered_float")]
+#[cfg_attr(docsrs, doc(cfg(feature = "ordered_float")))]
 impl<T: UlpsEq + Float + ordered_float::FloatCore> UlpsEq<T> for OrderedFloat<T> {
     #[inline]
     fn default_max_ulps() -> u32 {
