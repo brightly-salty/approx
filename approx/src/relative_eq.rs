@@ -65,7 +65,7 @@ where
 // Implementation based on: [Comparing Floating Point Numbers, 2012 Edition]
 // (https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/)
 macro_rules! impl_relative_eq {
-    ($T:ident, $U:ident) => {
+    ($T:ident) => {
         impl RelativeEq for $T {
             #[inline]
             fn default_max_relative() -> $T {
@@ -109,8 +109,8 @@ macro_rules! impl_relative_eq {
     };
 }
 
-impl_relative_eq!(f32, i32);
-impl_relative_eq!(f64, i64);
+impl_relative_eq!(f32);
+impl_relative_eq!(f64);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Derived implementations
