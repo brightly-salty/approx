@@ -13,18 +13,32 @@
 // limitations under the License.
 
 //! A crate that provides facilities for testing the approximate equality of floating-point
-//! based types, using either relative difference, or units in the last place (ULPs)
+//! based types, using either absolute, relative differences or units in the last place (ULPs)
 //! comparisons.
 //!
-//! You can also use the `*_{eq, ne}!` and `assert_*_{eq, ne}!` macros to test for equality using a
-//! more positional style:
+//! 1. [Macros](#macros)
+//! 2. [Derive Macros](#deriving-traits)
+//! 3. [Custom Implementations](#implementing-approximate-equality-for-custom-types)
+//! 4. [Supported Types](#supported-types)
+//! 5. [References](#references)
+//!
+//! # Macros
+//! The crate provides macros in the form of `*_{eq, ne}!` and `assert_*_{eq, ne}!` to test for
+//! equality using a positional style.
+//! The former return a `bool` while the latter will panic.
+//! These macros are also available as a `debug_*_{eq, ne}` and `debug_assert_*_{eq,ne}` version
+//! which are only executed when `cfg(debug_assertions)` is active.
+//!
+//! | | `x≈y -> bool` | `x!≈y -> bool` | `assert!(x≈y)` | `assert!(x!≈y)` |
+//! |:--|:--|:--|:--|:--|
+//! | [`AbsDiffEq`]     | [`abs_diff_eq`]   | [`abs_diff_ne`]   | [`assert_abs_diff_eq`] | [`assert_abs_diff_ne`] |
+//! | [`RelativeEq`]    | [`relative_eq`]   | [`relative_ne`]   | [`assert_relative_eq`] | [`assert_relative_ne`] |
+//! | [`Ulps`]          | [`ulps_eq`]       | [`ulps_ne`]       | [`assert_ulps_eq`]     | [`assert_ulps_ne`] |
 //!
 //! ```rust
-//! #[macro_use]
-//! extern crate approx;
-//!
-//! use std::f64;
-//!
+//! # #[macro_use]
+//! # extern crate approx;
+//! # use std::f64;
 //! # fn main() {
 //! static ε: f64 = f64::EPSILON;
 //! assert_abs_diff_eq!(1.0, 1.0);                        // ✅
@@ -47,7 +61,32 @@
 //! # }
 //! ```
 //!
-//! See also the [`abs_diff_eq!`](AbsDiffEq::abs_diff_eq), [`relative_eq!`](RelativeEq::relative_eq) and [`ulps_eq!`](UlpsEq::ulps_eq) macros, which return [`bool`] instead of [`assert`]ing.
+//! # Deriving Traits
+//! The [approx_derive] crate was explicitly designed to provide derive macros for the approximate
+//! comparison traits.
+//! It is generally advised to use this crate before manually implementing the functionality.
+//! Deriving traits will perform the actions of the respective comparison trait on the individual
+//! struct fields one after the other.
+//! This requires the `derive` feature.
+//!
+//! ```
+//! # #[cfg(feature = "derive")] {
+//! use approx::{AbsDiffEq, assert_abs_diff_eq};
+//!
+//! #[derive(AbsDiffEq, Debug, PartialEq)]
+//! struct Barrel<T> {
+//!     radius: T,
+//!     height: T,
+//!     #[approx(equal)]
+//!     color: [u8; 3],
+//! }
+//!
+//! let v1 = Barrel { radius: 43.0, height: 72.0, color: [255, 0, 0], };
+//! let v2 = Barrel { radius: 42.9, height: 72.1, color: [255, 0, 0], };
+//!
+//! assert_abs_diff_eq!(v1, v2, epsilon = 0.11f64);
+//! # }
+//! ```
 //!
 //! # Implementing approximate equality for custom types
 //!
@@ -57,10 +96,9 @@
 //! For example, we might want to be able to do approximate assertions on a complex number type:
 //!
 //! ```rust
-//! #[macro_use]
-//! extern crate approx;
+//! # #[macro_use]
+//! # extern crate approx;
 //! # use approx::{AbsDiffEq, RelativeEq, UlpsEq};
-//!
 //! #[derive(Debug, PartialEq)]
 //! struct Complex<T> {
 //!     x: T,
@@ -148,6 +186,22 @@
 //!     }
 //! }
 //! ```
+//!
+//! # Supported Types
+//!
+//! | | [`AbsDiffEq`] | [`RelativeEq`] | [`UlpsEq`] | Comment |
+//! |--|:--:|:--:|:--:|--|
+//! | [`f32`], [`f64`] | ✅ | ✅ | ✅ | |
+//! | [`i8`], [`i16`], [`i32`], [`i64`],[`i128`],[`isize`] | ✅ | ✅ | ❌ | |
+//! | [`u8`], [`u16`], [`u32`], [`u64`],[`u128`],[`usize`] | ✅ | ✅ | ❌ | |
+//! | [`Option<T>`] | ✅ | ✅ | ✅ | |
+//! | [`Result<T, E>`] | ✅ | ✅ | ✅ | |
+//! | [`Vec<T>`](mod@alloc::vec) | ✅ | ✅ | ✅ | feature `vec_impl` |
+//! | [`indexmap::IndexMap<K, V, S>`](indexmap::IndexMap) | ✅ | ✅ | ✅ | feature `indexmap_impl` |
+//! | [`num_complex::Complex<T>`] | ✅ | ✅ | ✅ | feature `num_complex` |
+//! | [`ordered_float::OrderedFloat<T>`](ordered_float::OrderedFloat) | ✅ | ✅ | ✅ | feature `ordered_float` |
+//! | [`[T; N]`](array) | ✅ | ✅ | ✅ | feature `array_impl` |
+//! | [`(T0, T1, .., T11)`](tuple) | ✅ | ✅ | ✅ | feature `tuple_impl`, up to size `12` |
 //!
 //! # References
 //!
