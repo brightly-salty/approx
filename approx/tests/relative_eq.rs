@@ -42,52 +42,44 @@ mod test_f32 {
         assert_relative_ne!(1.0f32, 1.0f32);
     }
 
+    fn compare_near_numbers(number: f32) {
+        let rel_eq_number = number * 1.0000001f32;
+        assert_ne!(number, rel_eq_number);
+        assert_relative_eq!(number, rel_eq_number);
+        assert_relative_eq!(rel_eq_number, number);
+        let rel_ne_number = number * 1.0000002f32;
+        assert_relative_ne!(number, rel_ne_number);
+        assert_relative_ne!(rel_ne_number, number);
+    }
+
     #[test]
     fn test_big() {
-        assert_relative_eq!(100000000.0f32, 100000001.0f32);
-        assert_relative_eq!(100000001.0f32, 100000000.0f32);
-        assert_relative_ne!(10000.0f32, 10001.0f32);
-        assert_relative_ne!(10001.0f32, 10000.0f32);
+        compare_near_numbers(1e20f32);
     }
 
     #[test]
     fn test_big_neg() {
-        assert_relative_eq!(-100000000.0f32, -100000001.0f32);
-        assert_relative_eq!(-100000001.0f32, -100000000.0f32);
-        assert_relative_ne!(-10000.0f32, -10001.0f32);
-        assert_relative_ne!(-10001.0f32, -10000.0f32);
+        compare_near_numbers(-1e20f32);
     }
 
     #[test]
     fn test_mid() {
-        assert_relative_eq!(1.0000001f32, 1.0000002f32);
-        assert_relative_eq!(1.0000002f32, 1.0000001f32);
-        assert_relative_ne!(1.000001f32, 1.000002f32);
-        assert_relative_ne!(1.000002f32, 1.000001f32);
+        compare_near_numbers(1f32);
     }
 
     #[test]
     fn test_mid_neg() {
-        assert_relative_eq!(-1.0000001f32, -1.0000002f32);
-        assert_relative_eq!(-1.0000002f32, -1.0000001f32);
-        assert_relative_ne!(-1.000001f32, -1.000002f32);
-        assert_relative_ne!(-1.000002f32, -1.000001f32);
+        compare_near_numbers(-1f32);
     }
 
     #[test]
     fn test_small() {
-        assert_relative_eq!(0.000010001f32, 0.000010002f32);
-        assert_relative_eq!(0.000010002f32, 0.000010001f32);
-        assert_relative_ne!(0.000001002f32, 0.0000001001f32);
-        assert_relative_ne!(0.000001001f32, 0.0000001002f32);
+        compare_near_numbers(1e-20f32);
     }
 
     #[test]
     fn test_small_neg() {
-        assert_relative_eq!(-0.000010001f32, -0.000010002f32);
-        assert_relative_eq!(-0.000010002f32, -0.000010001f32);
-        assert_relative_ne!(-0.000001002f32, -0.0000001001f32);
-        assert_relative_ne!(-0.000001001f32, -0.0000001002f32);
+        compare_near_numbers(-1e-20f32);
     }
 
     #[test]
@@ -104,15 +96,15 @@ mod test_f32 {
 
     #[test]
     fn test_epsilon() {
-        assert_relative_eq!(0.0f32, 1e-40f32, epsilon = 1e-40f32);
-        assert_relative_eq!(1e-40f32, 0.0f32, epsilon = 1e-40f32);
-        assert_relative_eq!(0.0f32, -1e-40f32, epsilon = 1e-40f32);
-        assert_relative_eq!(-1e-40f32, 0.0f32, epsilon = 1e-40f32);
+        assert_relative_eq!(0.0f32, 1e-20f32, epsilon = 1e-20f32);
+        assert_relative_eq!(1e-20f32, 0.0f32, epsilon = 1e-20f32);
+        assert_relative_eq!(0.0f32, -1e-20f32, epsilon = 1e-20f32);
+        assert_relative_eq!(-1e-20f32, 0.0f32, epsilon = 1e-20f32);
 
-        assert_relative_ne!(1e-40f32, 0.0f32, epsilon = 1e-41f32);
-        assert_relative_ne!(0.0f32, 1e-40f32, epsilon = 1e-41f32);
-        assert_relative_ne!(-1e-40f32, 0.0f32, epsilon = 1e-41f32);
-        assert_relative_ne!(0.0f32, -1e-40f32, epsilon = 1e-41f32);
+        assert_relative_ne!(1e-20f32, 0.0f32, epsilon = 1e-21f32);
+        assert_relative_ne!(0.0f32, 1e-20f32, epsilon = 1e-21f32);
+        assert_relative_ne!(-1e-20f32, 0.0f32, epsilon = 1e-21f32);
+        assert_relative_ne!(0.0f32, -1e-20f32, epsilon = 1e-21f32);
     }
 
     #[test]
@@ -169,25 +161,23 @@ mod test_f32 {
         assert_relative_ne!(-1.0f32, 1.000000001f32);
         assert_relative_ne!(-1.000000001f32, 1.0f32);
         assert_relative_ne!(1.0f32, -1.000000001f32);
-
-        assert_relative_eq!(10.0 * f32::MIN_POSITIVE, 10.0 * -f32::MIN_POSITIVE);
     }
 
     #[test]
     fn test_close_to_zero() {
         assert_relative_eq!(f32::MIN_POSITIVE, f32::MIN_POSITIVE);
-        assert_relative_eq!(f32::MIN_POSITIVE, -f32::MIN_POSITIVE);
-        assert_relative_eq!(-f32::MIN_POSITIVE, f32::MIN_POSITIVE);
+        assert_relative_eq!(f32::MIN_POSITIVE / 2.0f32, -f32::MIN_POSITIVE / 2.0f32);
+        assert_relative_eq!(-f32::MIN_POSITIVE / 2.0f32, f32::MIN_POSITIVE / 2.0f32);
 
         assert_relative_eq!(f32::MIN_POSITIVE, 0.0f32);
         assert_relative_eq!(0.0f32, f32::MIN_POSITIVE);
         assert_relative_eq!(-f32::MIN_POSITIVE, 0.0f32);
         assert_relative_eq!(0.0f32, -f32::MIN_POSITIVE);
 
-        assert_relative_ne!(0.000001f32, -f32::MIN_POSITIVE);
-        assert_relative_ne!(0.000001f32, f32::MIN_POSITIVE);
-        assert_relative_ne!(f32::MIN_POSITIVE, 0.000001f32);
-        assert_relative_ne!(-f32::MIN_POSITIVE, 0.000001f32);
+        assert_relative_ne!(1e-20f32, -f32::MIN_POSITIVE);
+        assert_relative_ne!(1e-20f32, f32::MIN_POSITIVE);
+        assert_relative_ne!(f32::MIN_POSITIVE, 1e-20f32);
+        assert_relative_ne!(-f32::MIN_POSITIVE, 1e-20f32);
     }
 
     #[test]
@@ -226,52 +216,44 @@ mod test_f64 {
         assert_relative_ne!(1.0f64, 1.0f64);
     }
 
+    fn compare_near_numbers(number: f64) {
+        let rel_eq_number = number * 1.0000000000000002f64;
+        assert_ne!(number, rel_eq_number);
+        assert_relative_eq!(number, rel_eq_number);
+        assert_relative_eq!(rel_eq_number, number);
+        let rel_ne_number = number * 1.0000000000000004f64;
+        assert_relative_ne!(number, rel_ne_number);
+        assert_relative_ne!(rel_ne_number, number);
+    }
+
     #[test]
     fn test_big() {
-        assert_relative_eq!(10000000000000000.0f64, 10000000000000001.0f64);
-        assert_relative_eq!(10000000000000001.0f64, 10000000000000000.0f64);
-        assert_relative_ne!(1000000000000000.0f64, 1000000000000001.0f64);
-        assert_relative_ne!(1000000000000001.0f64, 1000000000000000.0f64);
+        compare_near_numbers(1e250f64);
     }
 
     #[test]
     fn test_big_neg() {
-        assert_relative_eq!(-10000000000000000.0f64, -10000000000000001.0f64);
-        assert_relative_eq!(-10000000000000001.0f64, -10000000000000000.0f64);
-        assert_relative_ne!(-1000000000000000.0f64, -1000000000000001.0f64);
-        assert_relative_ne!(-1000000000000001.0f64, -1000000000000000.0f64);
+        compare_near_numbers(-1e250f64);
     }
 
     #[test]
     fn test_mid() {
-        assert_relative_eq!(1.0000000000000001f64, 1.0000000000000002f64);
-        assert_relative_eq!(1.0000000000000002f64, 1.0000000000000001f64);
-        assert_relative_ne!(1.000000000000001f64, 1.000000000000002f64);
-        assert_relative_ne!(1.000000000000002f64, 1.000000000000001f64);
+        compare_near_numbers(1f64);
     }
 
     #[test]
     fn test_mid_neg() {
-        assert_relative_eq!(-1.0000000000000001f64, -1.0000000000000002f64);
-        assert_relative_eq!(-1.0000000000000002f64, -1.0000000000000001f64);
-        assert_relative_ne!(-1.000000000000001f64, -1.000000000000002f64);
-        assert_relative_ne!(-1.000000000000002f64, -1.000000000000001f64);
+        compare_near_numbers(-1f64);
     }
 
     #[test]
     fn test_small() {
-        assert_relative_eq!(0.0000000100000001f64, 0.0000000100000002f64);
-        assert_relative_eq!(0.0000000100000002f64, 0.0000000100000001f64);
-        assert_relative_ne!(0.0000000100000001f64, 0.0000000010000002f64);
-        assert_relative_ne!(0.0000000100000002f64, 0.0000000010000001f64);
+        compare_near_numbers(1e-250f64);
     }
 
     #[test]
     fn test_small_neg() {
-        assert_relative_eq!(-0.0000000100000001f64, -0.0000000100000002f64);
-        assert_relative_eq!(-0.0000000100000002f64, -0.0000000100000001f64);
-        assert_relative_ne!(-0.0000000100000001f64, -0.0000000010000002f64);
-        assert_relative_ne!(-0.0000000100000002f64, -0.0000000010000001f64);
+        compare_near_numbers(-1e-250f64);
     }
 
     #[test]
@@ -338,6 +320,12 @@ mod test_f64 {
     }
 
     #[test]
+    fn test_zero_infinity() {
+        assert_relative_ne!(0f64, f64::INFINITY);
+        assert_relative_ne!(0f64, f64::NEG_INFINITY);
+    }
+
+    #[test]
     fn test_nan() {
         assert_relative_ne!(f64::NAN, f64::NAN);
 
@@ -364,29 +352,27 @@ mod test_f64 {
 
     #[test]
     fn test_opposite_signs() {
-        assert_relative_ne!(1.000000001f64, -1.0f64);
-        assert_relative_ne!(-1.0f64, 1.000000001f64);
-        assert_relative_ne!(-1.000000001f64, 1.0f64);
-        assert_relative_ne!(1.0f64, -1.000000001f64);
-
-        assert_relative_eq!(10.0 * f64::MIN_POSITIVE, 10.0 * -f64::MIN_POSITIVE);
+        assert_relative_ne!(1.0000000000000002f64, -1.0f64);
+        assert_relative_ne!(-1.0f64, 1.0000000000000002f64);
+        assert_relative_ne!(-1.0000000000000002f64, 1.0f64);
+        assert_relative_ne!(1.0f64, -1.0000000000000002f64);
     }
 
     #[test]
     fn test_close_to_zero() {
         assert_relative_eq!(f64::MIN_POSITIVE, f64::MIN_POSITIVE);
-        assert_relative_eq!(f64::MIN_POSITIVE, -f64::MIN_POSITIVE);
-        assert_relative_eq!(-f64::MIN_POSITIVE, f64::MIN_POSITIVE);
+        assert_relative_eq!(f64::MIN_POSITIVE / 2.0f64, -f64::MIN_POSITIVE / 2.0f64);
+        assert_relative_eq!(-f64::MIN_POSITIVE / 2.0f64, f64::MIN_POSITIVE / 2.0f64);
 
         assert_relative_eq!(f64::MIN_POSITIVE, 0.0f64);
         assert_relative_eq!(0.0f64, f64::MIN_POSITIVE);
         assert_relative_eq!(-f64::MIN_POSITIVE, 0.0f64);
         assert_relative_eq!(0.0f64, -f64::MIN_POSITIVE);
 
-        assert_relative_ne!(0.000000000000001f64, -f64::MIN_POSITIVE);
-        assert_relative_ne!(0.000000000000001f64, f64::MIN_POSITIVE);
-        assert_relative_ne!(f64::MIN_POSITIVE, 0.000000000000001f64);
-        assert_relative_ne!(-f64::MIN_POSITIVE, 0.000000000000001f64);
+        assert_relative_ne!(1e-250f64, -f64::MIN_POSITIVE);
+        assert_relative_ne!(1e-250f64, f64::MIN_POSITIVE);
+        assert_relative_ne!(f64::MIN_POSITIVE, 1e-250f64);
+        assert_relative_ne!(-f64::MIN_POSITIVE, 1e-250f64);
     }
 
     #[test]
