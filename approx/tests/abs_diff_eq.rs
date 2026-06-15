@@ -682,6 +682,18 @@ mod test_indexmap {
     }
 }
 
+mod test_duration {
+    use core::time::Duration;
+
+    #[test]
+    fn test_basic() {
+        assert_abs_diff_eq!(Duration::from_secs(1), Duration::from_secs(1));
+        assert_abs_diff_ne!(Duration::from_secs(1), Duration::from_secs(2));
+        assert_abs_diff_ne!(Duration::from_secs(1), Duration::new(1, 10), epsilon = Duration::from_nanos(1));
+        assert_abs_diff_eq!(Duration::from_secs(1), Duration::new(1, 10), epsilon = Duration::from_nanos(100));
+    }
+}
+
 #[test]
 fn test_debug_abs_diff() {
     let x = 1.0;

@@ -3,6 +3,7 @@ use alloc::vec::Vec;
 use core::cell;
 #[cfg(feature = "indexmap_impl")]
 use core::hash::{BuildHasher, Hash};
+use core::time::Duration;
 #[cfg(feature = "indexmap_impl")]
 use indexmap::IndexMap;
 #[cfg(feature = "num_complex")]
@@ -304,6 +305,18 @@ mod abs_diff_eq_tuple_impls {
     impl_abs_diff_eq!(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
     impl_abs_diff_eq!(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     impl_abs_diff_eq!(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+}
+
+impl AbsDiffEq for Duration {
+    type Epsilon = Self;
+
+    fn default_epsilon() -> Self::Epsilon {
+        Duration::from_nanos(0)
+    }
+
+    fn abs_diff_eq(&self, other: &Self, epsilon: Self::Epsilon) -> bool {
+        self.abs_diff(*other) <= epsilon
+    }
 }
 
 #[cfg(feature = "vec_impl")]
