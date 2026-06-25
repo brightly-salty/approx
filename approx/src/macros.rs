@@ -204,11 +204,11 @@ macro_rules! make_debug (
         /// ```
         #[macro_export]
         macro_rules! $new_name {
-            ($dol($to:tt)*) => {if cfg!(debug_assertions) {$macro_name!($dol($to)*)} else {true}}
+            ($dol($to:tt)*) => {if cfg!(debug_assertions) {$crate::$macro_name!($dol($to)*)} else {true}}
         }
     };
-    (@assert $new_name:ident, $macro_name:ident) => {make_debug!(@assert $new_name, $macro_name, $);};
-    (@assert $new_name:ident, $macro_name:ident, $dol:tt) => {
+    (@assert $new_name:ident, $macro_name:ident) => {make_debug!(@assert $new_name, $crate::$macro_name, $);};
+    (@assert $new_name:ident, $crate::$macro_name:ident, $dol:tt) => {
         /// Debug version of [`
         #[doc = stringify!($macro_name)]
         /// `]
@@ -224,7 +224,7 @@ macro_rules! make_debug (
         /// ```
         #[macro_export]
         macro_rules! $new_name {
-            ($dol($to:tt)*) => {if cfg!(debug_assertions) {$macro_name!($dol($to)*)}}
+            ($dol($to:tt)*) => {if cfg!(debug_assertions) {$crate::$macro_name!($dol($to)*)}}
         }
 
     };
